@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { DBconfig } from './DBconfig/DBconfig.psw';
 import { RbacModule } from './rbac/rbac.module';
+import { RbacModule } from './rbac_/rbac_.module';
 
 @Module({
   imports: [

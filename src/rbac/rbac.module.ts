@@ -1,10 +1,10 @@
 // rbac.module.ts
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RbacController } from './rbac.controller';
 import { RbacService } from './rbac.service';
 import { User } from '../entities/User';
-
+import { CounterMiddleware } from '../counter/counter.middleware';
 @Module({
   imports: [TypeOrmModule.forFeature([User])],
   controllers: [RbacController],
@@ -26,4 +26,8 @@ import { User } from '../entities/User';
     },
   ],
 })
-export class RbacModule {}
+export class RbacModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(CounterMiddleware).forRoutes('rbac');
+  }
+}
