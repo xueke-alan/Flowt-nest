@@ -2,8 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { DBconfig } from './DBconfig/DBconfig.psw';
-import { RbacModule } from './rbac/rbac.module';
-import { RbacModule } from './rbac_/rbac_.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -11,11 +10,10 @@ import { RbacModule } from './rbac_/rbac_.module';
       type: 'mysql',
       retryDelay: 500,
       retryAttempts: 3,
-      synchronize: true,
       autoLoadEntities: true,
       ...DBconfig,
     }),
-    RbacModule,
+    UsersModule,
   ],
   controllers: [],
   providers: [],

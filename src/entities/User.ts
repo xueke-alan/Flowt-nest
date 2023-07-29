@@ -1,24 +1,23 @@
-import { Column, Entity, Index } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Index("UserID", ["id"], { unique: true })
 @Entity("User", { schema: "flowt" })
 export class User {
-  @Column("char", { primary: true, name: "id", length: 36 })
-  id: string;
+  @PrimaryGeneratedColumn({ type: "int", name: "id" })
+  id: number;
 
   @Column("varchar", {
-    name: "StaffID",
+    name: "staffID",
     comment: "员工编号",
     length: 50,
     default: () => "'XX00000'",
   })
   staffId: string;
 
-  @Column("varchar", { name: "Username", comment: "英文姓名", length: 50 })
+  @Column("varchar", { name: "username", comment: "英文姓名", length: 50 })
   username: string;
 
   @Column("varchar", {
-    name: "UsernameCn",
+    name: "usernameCn",
     nullable: true,
     comment: "中文姓名",
     length: 50,
@@ -26,7 +25,7 @@ export class User {
   usernameCn: string | null;
 
   @Column("varchar", {
-    name: "UsernameGPO",
+    name: "usernameGPO",
     nullable: true,
     comment: "GPO显示的姓名",
     length: 50,
@@ -34,7 +33,7 @@ export class User {
   usernameGpo: string | null;
 
   @Column("varchar", {
-    name: "Avatar",
+    name: "avatar",
     nullable: true,
     comment: "头像地址",
     length: 255,
@@ -42,7 +41,7 @@ export class User {
   avatar: string | null;
 
   @Column("varchar", {
-    name: "Email",
+    name: "email",
     nullable: true,
     comment: "邮箱",
     length: 255,
@@ -50,7 +49,7 @@ export class User {
   email: string | null;
 
   @Column("int", {
-    name: "State",
+    name: "state",
     comment: "账号状态(0:在职员工;1:离职员工)",
     default: () => "'0'",
   })
