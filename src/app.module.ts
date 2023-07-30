@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { DBconfig } from './DBconfig/DBconfig.psw';
 import { UsersModule } from './users/users.module';
+import { LoginModule } from './login/login.module';
 
 @Module({
   imports: [
@@ -11,9 +12,13 @@ import { UsersModule } from './users/users.module';
       retryDelay: 500,
       retryAttempts: 3,
       autoLoadEntities: true,
+      synchronize: true,
       ...DBconfig,
     }),
+
+
     UsersModule,
+    LoginModule,
   ],
   controllers: [],
   providers: [],

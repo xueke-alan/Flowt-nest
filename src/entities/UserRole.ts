@@ -1,5 +1,14 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { User } from "./User";
 
+@Index("UserRole_User_staffID_fk", ["staffId"], {})
 @Entity("UserRole", { schema: "flowt" })
 export class UserRole {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
@@ -10,4 +19,11 @@ export class UserRole {
 
   @Column("varchar", { name: "roleName", nullable: true, length: 50 })
   roleName: string | null;
+
+  @ManyToOne(() => User, (user) => user.userRoles, {
+    onDelete: "RESTRICT",
+    onUpdate: "RESTRICT",
+  })
+  @JoinColumn([{ name: "staffID", referencedColumnName: "staffId" }])
+  staff: User;
 }

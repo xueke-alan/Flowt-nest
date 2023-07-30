@@ -1,5 +1,16 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  Index,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { UserGroup } from "./UserGroup";
+import { UserPassword } from "./UserPassword";
+import { UserRole } from "./UserRole";
 
+@Index("User_pk", ["staffId"], { unique: true })
+@Index("IDX_199c78fbb21e9c407ae2c3f327", ["staffId"], { unique: true })
 @Entity("User", { schema: "flowt" })
 export class User {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
@@ -7,6 +18,7 @@ export class User {
 
   @Column("varchar", {
     name: "staffID",
+    unique: true,
     comment: "员工编号",
     length: 50,
     default: () => "'XX00000'",
@@ -54,4 +66,13 @@ export class User {
     default: () => "'0'",
   })
   state: number;
+
+  @OneToMany(() => UserGroup, (userGroup) => userGroup.staff)
+  userGroups: UserGroup[];
+
+  @OneToMany(() => UserPassword, (userPassword) => userPassword.staff)
+  userPasswords: UserPassword[];
+
+  @OneToMany(() => UserRole, (userRole) => userRole.staff)
+  userRoles: UserRole[];
 }

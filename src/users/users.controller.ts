@@ -18,12 +18,8 @@ export class UsersController {
 
   // TODO 可以传递对象或者对象数组
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    const raw = this.usersService.create(createUserDto);
-    return {
-      raw,
-      affected: 1,
-    };
+  async create(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.create(createUserDto);
   }
 
   @Get()

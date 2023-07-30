@@ -3,7 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from './entities/user.entity';
+import { User } from '../entities/User';
 
 @Injectable()
 export class UsersService {
@@ -11,10 +11,9 @@ export class UsersService {
     @InjectRepository(User) private readonly user: Repository<User>,
   ) {}
 
-  async create(createUserDto: CreateUserDto) {
+  create(createUserDto: CreateUserDto) {
     console.log(createUserDto);
-    await this.user.save(createUserDto);
-    return 'success 一行记录被添加';
+    return this.user.save(createUserDto);
   }
 
   // TODO: 可以加验证器
@@ -28,8 +27,18 @@ export class UsersService {
     return this.user.find({ where: { id } });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const existingUser = await this.user.findOne({ where: { id } });
+
+    if (!existingUser) {
+      return 'User not found';
+    }
+
+    // Object.assign(existingUser, updateUserDto);
+
+    // return this.user.save(existingUser);
+    // TODO 由于外键存在，可能会报错，需要加全局错误
+    return this.user.update(id, updateUserDto);
   }
 
   remove(id: number) {
