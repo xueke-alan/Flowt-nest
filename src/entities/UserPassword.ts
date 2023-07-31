@@ -1,12 +1,4 @@
-import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from "typeorm";
-import { User } from "./User";
+import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
 
 @Index("UserPassword_User_staffID_fk", ["staffId"], {})
 @Entity("UserPassword", { schema: "flowt" })
@@ -14,7 +6,7 @@ export class UserPassword {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
   id: number;
 
-  @Column("varchar", { name: "staffID", nullable: true, length: 50 })
+  @Column("varchar", { name: "staffId", nullable: true, length: 50 })
   staffId: string | null;
 
   @Column("varchar", { name: "hashPassword", nullable: true, length: 255 })
@@ -28,11 +20,4 @@ export class UserPassword {
 
   @Column("datetime", { name: "valid_until", nullable: true })
   validUntil: Date | null;
-
-  @ManyToOne(() => User, (user) => user.userPasswords, {
-    onDelete: "RESTRICT",
-    onUpdate: "RESTRICT",
-  })
-  @JoinColumn([{ name: "staffID", referencedColumnName: "staffId" }])
-  staff: User;
 }

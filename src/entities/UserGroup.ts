@@ -14,7 +14,7 @@ export class UserGroup {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
   id: number;
 
-  @Column("varchar", { name: "staffID", nullable: true, length: 50 })
+  @Column("varchar", { name: "staffId", nullable: true, length: 50 })
   staffId: string | null;
 
   @Column("varchar", { name: "groupName", nullable: true, length: 50 })
@@ -24,6 +24,6 @@ export class UserGroup {
     onDelete: "RESTRICT",
     onUpdate: "RESTRICT",
   })
-  @JoinColumn([{ name: "staffID", referencedColumnName: "staffId" }])
+  @JoinColumn([{ name: "staffId", referencedColumnName: "staffId" }])
   staff: User;
 }

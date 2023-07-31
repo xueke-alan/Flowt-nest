@@ -23,37 +23,20 @@ export class LoginService {
   // 改名字为validateUser??
   async login(HashPassword) {
     console.log(HashPassword);
+    // 这里应该联合查询，因为需要返回信息
     const user = await this.userPassword.findOne({
       where: { staffId: HashPassword.staffId },
     });
     const verify = HashPassword.toVerify == user.hashPassword;
     if (verify) {
-      this.userPassword.update(user.id, HashPassword);
+      // this.userPassword.update(user.id, HashPassword);
       // TODO 返回一个Token
-      const payload = { sub: 1, iss: 1, aud: 1, exp: 1, iat: 1, nbf: 1 };
+      const payload = { ...user };
+      
       return {
-        access_token: this.jwtService.sign(payload),
+        staffId: user.staffId,
+        Token: this.jwtService.sign(payload),
       };
-    } 
-  }
-
-  create(createLoginDto: CreateLoginDto) {
-    return 'This action adds a new login';
-  }
-
-  findAll() {
-    return `This action returns all login`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} login`;
-  }
-
-  update(id: number, updateLoginDto: UpdateLoginDto) {
-    return `This action updates a #${id} login`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} login`;
+    }
   }
 }
