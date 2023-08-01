@@ -24,6 +24,18 @@ export class LoginService {
   async login(HashPassword) {
     console.log(HashPassword);
     // 这里应该联合查询，因为需要返回信息
+
+    // 联合查询userPassword和users表
+    const userPasswordWithUser = await this.userPassword
+      .createQueryBuilder('userPassword')
+      .leftJoinAndSelect('userPassword.user', 'user')
+      .where('userPassword.staffId = :staffId', {
+        staffId: HashPassword.staffId,
+      })
+      .getOne();
+
+    console.log(userPasswordWithUser);
+
     const user = await this.userPassword.findOne({
       where: { staffId: HashPassword.staffId },
     });
@@ -32,10 +44,11 @@ export class LoginService {
       // this.userPassword.update(user.id, HashPassword);
       // TODO 返回一个Token
       const payload = { ...user };
-      
+
       return {
         staffId: user.staffId,
-        Token: this.jwtService.sign(payload),
+        usernameCn: '-',
+        token: this.jwtService.sign(payload),
       };
     }
   }

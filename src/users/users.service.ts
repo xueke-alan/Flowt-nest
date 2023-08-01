@@ -23,8 +23,15 @@ export class UsersService {
     return this.user.find();
   }
 
-  findOne(id: number) {
-    return this.user.find({ where: { id } });
+  async findOne(id: number) {
+    const user = await this.user.findOne({
+      where: { id },
+      relations: ['userGroups', 'userPasswords', 'userRoles'], // 在这里指定要加载的关联实体，这里使用userGroups作为关联字段名
+    });
+
+    console.log(user);
+
+    return user;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
@@ -43,5 +50,43 @@ export class UsersService {
 
   remove(id: number) {
     return this.user.delete(id);
+  }
+
+  getInfo() {
+    const info = {
+      staffId: 'GZ10548',
+      Username: 'Alan xue',
+      usernameCn: '薛科',
+      UsernameGPO: 'Alan_xue',
+      Avatar:
+        'https://res.cloudinary.com/postman/image/upload/t_team_logo/v1685442616/team/816e81aa01116ed74f82a7d65a5dd84c8f92add9fc3b6e867945873d3dbbf2f9.jpg',
+      Email: 'manager',
+      State: '1',
+      Token: '',
+      permissions: [
+        {
+          label: '主控台',
+          value: 'dashboard_console',
+        },
+        {
+          label: '监控页',
+          value: 'dashboard_monitor',
+        },
+        {
+          label: '工作台',
+          value: 'dashboard_workplace',
+        },
+        {
+          label: '基础列表',
+          value: 'basic_list',
+        },
+        {
+          label: '基础列表删除',
+          value: 'basic_list_delete',
+        },
+      ],
+    };
+    console.log('111');
+    return info;
   }
 }

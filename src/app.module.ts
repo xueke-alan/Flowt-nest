@@ -12,7 +12,7 @@ import { LoginModule } from './login/login.module';
       retryDelay: 500,
       retryAttempts: 3,
       autoLoadEntities: true,
-      synchronize: true,
+      // synchronize: true,
       ...DBconfig,
     }),
 

@@ -6,10 +6,10 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { UserGroup } from "./UserGroup";
+import { UserPassword } from "./UserPassword";
+import { UserRole } from "./UserRole";
 
 @Index("User_pk", ["staffId"], { unique: true })
-@Index("IDX_199c78fbb21e9c407ae2c3f327", ["staffId"], { unique: true })
-@Index("IDX_85ca58b9f517b8085ef720765e", ["staffId"], { unique: true })
 @Entity("User", { schema: "flowt" })
 export class User {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
@@ -68,4 +68,10 @@ export class User {
 
   @OneToMany(() => UserGroup, (userGroup) => userGroup.staff)
   userGroups: UserGroup[];
+
+  @OneToMany(() => UserPassword, (userPassword) => userPassword.staff)
+  userPasswords: UserPassword[];
+
+  @OneToMany(() => UserRole, (userRole) => userRole.staff)
+  userRoles: UserRole[];
 }
