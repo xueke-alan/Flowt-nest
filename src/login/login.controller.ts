@@ -17,7 +17,7 @@ export class LoginController {
   // 预先密码
   @Post('preLogin/:staffId')
   preLogin(@Param('staffId') staffId: string) {
-    console.log(staffId);
+
 
     return this.loginService.preLogin(staffId);
   }

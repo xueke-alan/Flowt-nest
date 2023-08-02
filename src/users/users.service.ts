@@ -12,13 +12,11 @@ export class UsersService {
   ) {}
 
   create(createUserDto: CreateUserDto) {
-    console.log(createUserDto);
     return this.user.save(createUserDto);
   }
 
   // TODO: 可以加验证器
   findAll(query: any) {
-    console.log(query);
     // TODO 分页查询
     return this.user.find();
   }
@@ -28,8 +26,6 @@ export class UsersService {
       where: { id },
       relations: ['userGroups', 'userPasswords', 'userRoles'], // 在这里指定要加载的关联实体，这里使用userGroups作为关联字段名
     });
-
-    console.log(user);
 
     return user;
   }
@@ -86,7 +82,7 @@ export class UsersService {
         },
       ],
     };
-    console.log('111');
+
     return info;
   }
 }

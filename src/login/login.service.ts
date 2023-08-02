@@ -1,55 +1,61 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateLoginDto } from './dto/create-login.dto';
 import { UpdateLoginDto } from './dto/update-login.dto';
 import { UserPassword } from '../entities/UserPassword';
+import { User } from '../entities/User';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
+import { error, log } from 'console';
 
 @Injectable()
 export class LoginService {
   constructor(
     @InjectRepository(UserPassword)
     private readonly userPassword: Repository<UserPassword>,
+    @InjectRepository(User)
+    private readonly User: Repository<User>,
     private readonly jwtService: JwtService,
   ) {}
 
   preLogin(staffId: string) {
-    console.log(staffId);
     // 只查询salt，saltRounds，validUntil
     return this.userPassword.findOne({ where: { staffId } });
   }
 
   // 改名字为validateUser??
   async login(HashPassword) {
-    console.log(HashPassword);
     // 这里应该联合查询，因为需要返回信息
 
-    // 联合查询userPassword和users表
-    const userPasswordWithUser = await this.userPassword
-      .createQueryBuilder('userPassword')
-      .leftJoinAndSelect('userPassword.user', 'user')
-      .where('userPassword.staffId = :staffId', {
-        staffId: HashPassword.staffId,
-      })
-      .getOne();
-
-    console.log(userPasswordWithUser);
-
-    const user = await this.userPassword.findOne({
+    const user = await this.User.findOne({
       where: { staffId: HashPassword.staffId },
+      relations: ['userPasswords'],
     });
-    const verify = HashPassword.toVerify == user.hashPassword;
+    const user_Password = user.userPasswords[0];
+
+    // const verify = true;
+    const verify = HashPassword.toVerify == user_Password.hashPassword;
+
     if (verify) {
-      // this.userPassword.update(user.id, HashPassword);
-      // TODO 返回一个Token
-      const payload = { ...user };
+      console.log(HashPassword);
+
+      this.userPassword.update(user_Password.id, HashPassword.toUpdate);
+
+      const payload = { staffId: user.staffId, usernameCn: user.usernameCn };
 
       return {
         staffId: user.staffId,
-        usernameCn: '-',
+        usernameCn: user.usernameCn,
         token: this.jwtService.sign(payload),
       };
+    } else {
+      throw new HttpException(
+        {
+          status: HttpStatus.UNAUTHORIZED,
+          error: '账号或密码错误',
+        },
+        HttpStatus.UNAUTHORIZED,
+      );
     }
   }
 }
