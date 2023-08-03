@@ -4,11 +4,13 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../entities/User';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly user: Repository<User>,
+    private configService: ConfigService,
   ) {}
 
   create(createUserDto: CreateUserDto) {
@@ -17,6 +19,7 @@ export class UsersService {
 
   // TODO: 可以加验证器
   findAll(query: any) {
+
     // TODO 分页查询
     return this.user.find();
   }
