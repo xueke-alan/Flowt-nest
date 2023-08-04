@@ -17,11 +17,19 @@ export class UsersService {
     return this.user.save(createUserDto);
   }
 
-  // TODO: 可以加验证器
-  findAll(query: any) {
+  async findAll({ page = 1, pagesize = 15 }) {
+    const users = await this.user.find({
+      skip: (page - 1) * pagesize,
+      take: pagesize,
+    });
+    const total = await this.user.count();
 
-    // TODO 分页查询
-    return this.user.find();
+    return {
+      users,
+      page,
+      pagesize,
+      total,
+    };
   }
 
   async findOne(id: number) {
@@ -40,10 +48,6 @@ export class UsersService {
       return 'User not found';
     }
 
-    // Object.assign(existingUser, updateUserDto);
-
-    // return this.user.save(existingUser);
-    // TODO 由于外键存在，可能会报错，需要加全局错误
     return this.user.update(id, updateUserDto);
   }
 
@@ -51,17 +55,14 @@ export class UsersService {
     return this.user.delete(id);
   }
 
-  getInfo() {
+  async getInfo(staffId: string) {
+    const user = await this.user.findOne({
+      where: { staffId },
+      relations: ['userGroups', 'userPasswords', 'userRoles'], // 在这里指定要加载的关联实体，这里使用userGroups作为关联字段名
+    });
     const info = {
-      staffId: 'GZ10548',
-      Username: 'Alan xue',
-      usernameCn: '薛科',
-      UsernameGPO: 'Alan_xue',
-      Avatar:
-        'https://res.cloudinary.com/postman/image/upload/t_team_logo/v1685442616/team/816e81aa01116ed74f82a7d65a5dd84c8f92add9fc3b6e867945873d3dbbf2f9.jpg',
-      Email: 'manager',
-      State: '1',
-      Token: '',
+      ...user,
+      // TODO permissions要重构，此处的permissions仅限路由permissions
       permissions: [
         {
           label: '主控台',

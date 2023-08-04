@@ -1,10 +1,11 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { LoginService } from './login.service';
 import { LoginController } from './login.controller';
 
 import { JwtModule } from '@nestjs/jwt';
 import { SharedModule } from 'src/entities/shared.module';
 import { ConfigService } from '@nestjs/config';
+import { DomainMiddleware } from 'src/common/middleware/domain/domain.middleware';
 
 @Module({
   imports: [
@@ -21,6 +22,9 @@ import { ConfigService } from '@nestjs/config';
   controllers: [LoginController],
   providers: [LoginService],
 })
-export class LoginModule {
+export class LoginModule implements NestModule {
   constructor(private readonly configService: ConfigService) {}
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(DomainMiddleware).forRoutes('login'); // 指定要拦截的路由
+  }
 }

@@ -27,9 +27,9 @@ export class UsersController {
     return this.usersService.findAll(query);
   }
 
-  @Get('info')
-  getInfo() {
-    return this.usersService.getInfo();
+  @Get('info/:staffId')
+  getInfo(@Param('staffId') staffId: string) {
+    return this.usersService.getInfo(staffId);
   }
 
   @Get(':id')

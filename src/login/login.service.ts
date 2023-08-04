@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable   } from '@nestjs/common';
 import { UserPassword } from '../entities/UserPassword';
 import { User } from '../entities/User';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -17,7 +17,10 @@ export class LoginService {
 
   async preLogin(staffId: string) {
     // 只查询salt，saltRounds，validUntil
-    const user = await this.userPassword.findOne({ where: { staffId } });
+    const user = await this.userPassword.findOne({
+      where: { staffId },
+      select: ['salt', 'saltRounds', 'validUntil'],
+    });
     if (user) {
       return {
         ...user,
@@ -83,7 +86,7 @@ export class LoginService {
       // 传回基本信息
       const payload = { staffId: user.staffId, usernameCn: user.usernameCn };
       return {
-        ...payload,
+        ...user,
         token: this.jwtService.sign(payload),
       };
     } else {
