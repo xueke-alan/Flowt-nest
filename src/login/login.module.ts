@@ -3,7 +3,7 @@ import { LoginService } from './login.service';
 import { LoginController } from './login.controller';
 
 import { JwtModule } from '@nestjs/jwt';
-import { SharedModule } from 'src/entities/shared.module';
+import { SharedModule } from 'src/entities/All';
 import { ConfigService } from '@nestjs/config';
 import { DomainMiddleware } from 'src/common/middleware/domain/domain.middleware';
 

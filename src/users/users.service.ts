@@ -58,33 +58,14 @@ export class UsersService {
   async getInfo(staffId: string) {
     const user = await this.user.findOne({
       where: { staffId },
-      relations: ['userGroups', 'userPasswords', 'userRoles'], // 在这里指定要加载的关联实体，这里使用userGroups作为关联字段名
+      relations: ['userGroups', 'userRoles'], // 在这里指定要加载的关联实体，这里使用userGroups作为关联字段名
     });
+
     const info = {
       ...user,
-      // TODO permissions要重构，此处的permissions仅限路由permissions
-      permissions: [
-        {
-          label: '主控台',
-          value: 'dashboard_console',
-        },
-        {
-          label: '监控页',
-          value: 'dashboard_monitor',
-        },
-        {
-          label: '工作台',
-          value: 'dashboard_workplace',
-        },
-        {
-          label: '基础列表',
-          value: 'basic_list',
-        },
-        {
-          label: '基础列表删除',
-          value: 'basic_list_delete',
-        },
-      ],
+
+      role: user.userRoles.map((r: any) => r.role),
+      permissions: [],
     };
 
     return info;
