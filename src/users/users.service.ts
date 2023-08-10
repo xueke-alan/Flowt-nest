@@ -61,10 +61,13 @@ export class UsersService {
       relations: ['userGroups', 'userRoles'], // 在这里指定要加载的关联实体，这里使用userGroups作为关联字段名
     });
 
-    const info = {
-      ...user,
+    // 解构出需要传回的参数为userInfo
+    const { userGroups, userRoles, id, ...userInfo } = user;
 
-      role: user.userRoles.map((r: any) => r.role),
+    const info = {
+      ...userInfo,
+      role: userRoles.map((r: any) => r.role),
+      group: userGroups.map((r: any) => r.groupName),
       permissions: [],
     };
 
