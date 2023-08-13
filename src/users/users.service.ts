@@ -24,6 +24,12 @@ export class UsersService {
     });
     const total = await this.user.count();
 
+    users.forEach((u)=>{
+      // u.mobile
+      u.mobile = u.mobile.replace(/^(\d{3})\d{4}/, '$1****');
+      u.email = u.email.replace(/^(.{3}).*(@.*)$/, "$1***$2");
+    }) 
+
     return {
       users,
       page,

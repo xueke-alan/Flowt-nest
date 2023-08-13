@@ -28,6 +28,14 @@ export class User {
   username: string;
 
   @Column("varchar", {
+    name: "gender",
+    nullable: true,
+    comment: "性别",
+    length: 1,
+  })
+  gender: string | null;
+
+  @Column("varchar", {
     name: "usernameCn",
     nullable: true,
     comment: "中文姓名",
@@ -50,6 +58,33 @@ export class User {
     length: 255,
   })
   avatar: string | null;
+
+  @Column("varchar", { name: "group", nullable: true, length: 25 })
+  group: string | null;
+
+  @Column("varchar", {
+    name: "Dir",
+    nullable: true,
+    comment: "Dir.直线",
+    length: 20,
+  })
+  dir: string | null;
+
+  @Column("varchar", {
+    name: "shortDir",
+    nullable: true,
+    comment: "分机号",
+    length: 10,
+  })
+  shortDir: string | null;
+
+  @Column("varchar", {
+    name: "mobile",
+    nullable: true,
+    comment: "手机号",
+    length: 20,
+  })
+  mobile: string | null;
 
   @Column("varchar", {
     name: "email",
