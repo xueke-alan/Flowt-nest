@@ -28,7 +28,7 @@ export class UsersService {
       // u.mobile
       u.mobile = u.mobile.replace(/^(\d{3})\d{4}/, '$1****');
       u.email = u.email.replace(/^(.{3}).*(@.*)$/, "$1***$2");
-    }) 
+    })
 
     return {
       users,
@@ -60,7 +60,7 @@ export class UsersService {
   remove(id: number) {
     return this.user.delete(id);
   }
-
+ 
   async getInfo(staffId: string) {
     const user = await this.user.findOne({
       where: { staffId },
