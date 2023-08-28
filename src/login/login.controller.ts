@@ -1,20 +1,10 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Controller, Post, Body, Param, UseInterceptors } from '@nestjs/common';
 import { LoginService } from './login.service';
 import { DomainMiddleware } from 'src/common/middleware/domain/domain.middleware';
 
 @Controller('login')
 export class LoginController {
   constructor(private readonly loginService: LoginService) {}
-
 
   // 预登录，获取盐与迭代次数
   @Post('preLogin/:staffId')

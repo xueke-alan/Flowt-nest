@@ -7,7 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
     SharedModule, // 导入共享模块
-    ConfigModule
+    ConfigModule,
   ],
   controllers: [UsersController],
   providers: [UsersService],

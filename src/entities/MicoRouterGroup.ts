@@ -4,17 +4,17 @@ import {
   Index,
   OneToMany,
   PrimaryGeneratedColumn,
-} from "typeorm";
-import { MicoRouter } from "./MicoRouter";
+} from 'typeorm';
+import { MicoRouter } from './MicoRouter';
 
-@Index("micoRouterGroup_pk", ["group"], { unique: true })
-@Entity("micoRouterGroup", { schema: "flowt" })
+@Index('micoRouterGroup_pk', ['group'], { unique: true })
+@Entity('micoRouterGroup', { schema: 'flowt' })
 export class MicoRouterGroup {
-  @PrimaryGeneratedColumn({ type: "int", name: "id" })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
-  @Column("varchar", {
-    name: "group",
+  @Column('varchar', {
+    name: 'group',
     nullable: true,
     unique: true,
     length: 255,
@@ -22,10 +22,10 @@ export class MicoRouterGroup {
   })
   group: string | null;
 
-  @Column("varchar", { name: "description", nullable: true, length: 255 })
+  @Column('varchar', { name: 'description', nullable: true, length: 255 })
   description: string | null;
 
-  @Column("varchar", { name: "sort", nullable: true, length: 255 })
+  @Column('varchar', { name: 'sort', nullable: true, length: 255 })
   sort: string | null;
 
   @OneToMany(() => MicoRouter, (micoRouter) => micoRouter.group2)
