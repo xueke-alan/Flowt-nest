@@ -13,7 +13,6 @@ lerna-debug.log*
 
 # OS
 .DS_Store
-.vscode
 
 # PSW
 *.psw.ts
@@ -39,3 +38,4 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+!.vscode/tree.txt

@@ -1,0 +1,54 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start All",
+      "dependsOn": ["NestJS", "BaseApp", "Start All children"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "type": "npm",
+      "script": "start:dev",
+      "problemMatcher": [],
+      "label": "NestJS",
+      "detail": "nest start --watch"
+    },
+    {
+      "type": "npm",
+      "script": "dev",
+      "problemMatcher": [],
+      "label": "BaseApp",
+      "detail": "vite --open",
+      "options": {
+        "cwd": "../Flowt_WebBaseSite"
+      }
+    },
+    {
+      "label": "Start All children",
+      "dependsOn": ["filelibrary", "template"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "template",
+      "type": "shell",
+      "command": "npm run dev",
+      "options": {
+        "cwd": "../Flowt_ChildApp/Flowt-ChildApp-template"
+      }
+    },
+    {
+      "label": "filelibrary",
+      "type": "shell",
+      "command": "npm run dev",
+      "options": {
+        "cwd": "../Flowt_ChildApp/Flowt-ChildApp-fileLibrary"
+      }
+    }
+  ]
+}
