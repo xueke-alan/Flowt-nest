@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MicoRouter } from '../entities/MicoRouter';
 import { Repository } from 'typeorm';
+import axios from 'axios';
 
 @Injectable()
 export class MicoRouterService {
@@ -29,5 +30,21 @@ export class MicoRouterService {
     const sortedGroupList = [...new Set(ORI.map((i) => i.group))];
 
     return { sortedGroupList, micoRouterListOri: ORI };
+  }
+
+  async getMicroConfigList() {
+    try {
+      // 这里的地址是服务器打开的地址，用于遍历微应用文件夹下有哪些微应用
+      const response = await axios.get('http://127.0.0.1:9999'); // 发送 GET 请求
+      const temp = response.data;
+      const list = {};
+      temp.forEach((t) => {
+        list[t.baseUrl] = t;
+      });
+      return list; // 返回响应数据
+    } catch (error) {
+      // 处理错误
+      throw new Error('无法获取配置列表');
+    }
   }
 }

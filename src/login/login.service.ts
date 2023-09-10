@@ -24,7 +24,7 @@ export class LoginService {
     if (user) {
       return {
         ...user,
-        preToken: this.jwtService.sign({ ...user }, { expiresIn: '3s' }),
+        preToken: this.jwtService.sign({ ...user }, { expiresIn: '5s' }),
       };
     } else {
       throw new HttpException(
