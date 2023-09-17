@@ -28,26 +28,18 @@
     },
     {
       "label": "Start All children",
-      "dependsOn": ["filelibrary", "template"],
+      "dependsOn": ["ChildApp"],
       "group": {
         "kind": "build",
         "isDefault": true
       }
     },
     {
-      "label": "template",
+      "label": "ChildApp",
       "type": "shell",
       "command": "npm run dev",
       "options": {
-        "cwd": "../Flowt_ChildApp/Flowt-ChildApp-template"
-      }
-    },
-    {
-      "label": "filelibrary",
-      "type": "shell",
-      "command": "npm run dev",
-      "options": {
-        "cwd": "../Flowt_ChildApp/Flowt-ChildApp-fileLibrary"
+        "cwd": "../Flowt_ChildApp"
       }
     }
   ]
