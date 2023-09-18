@@ -1,9 +1,10 @@
 {
   "version": "2.0.0",
   "tasks": [
+    // 执行全部命令
     {
       "label": "Start All",
-      "dependsOn": ["NestJS", "BaseApp", "Start All children"],
+      "dependsOn": ["NestJS", "BaseApp", "ChildApp"],
       "group": {
         "kind": "build",
         "isDefault": true
@@ -23,15 +24,7 @@
       "label": "BaseApp",
       "detail": "vite --open",
       "options": {
-        "cwd": "../Flowt_WebBaseSite"
-      }
-    },
-    {
-      "label": "Start All children",
-      "dependsOn": ["ChildApp"],
-      "group": {
-        "kind": "build",
-        "isDefault": true
+        "cwd": "../Flowt_BaseApp"
       }
     },
     {
@@ -40,6 +33,36 @@
       "command": "npm run dev",
       "options": {
         "cwd": "../Flowt_ChildApp"
+      }
+    },
+    // 安装全部依赖
+    {
+      "label": "pnpm All",
+      "dependsOn": ["pnpm NestApi", "pnpm ChildApp", "pnpm BaseApp"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "pnpm NestApi",
+      "type": "shell",
+      "command": "pnpm i",
+    },
+    {
+      "label": "pnpm ChildApp",
+      "type": "shell",
+      "command": "pnpm i",
+      "options": {
+        "cwd": "../Flowt_ChildApp"
+      }
+    },
+    {
+      "label": "pnpm BaseApp",
+      "type": "shell",
+      "command": "pnpm i",
+      "options": {
+        "cwd": "../Flowt_BaseApp"
       }
     }
   ]
