@@ -7,7 +7,7 @@ import { LoginModule } from './login/login.module';
 import { ConfigModule } from '@nestjs/config';
 import { SharedModule } from './entities/All';
 import { MicoRouterModule } from './mico-router/mico-router.module';
-import { QuotoModule } from './quoto/quoto.module';
+import { quoteModule } from './quote/quote.module';
 import databaseConfig from './common/config/database.config';
 import jwtConfig from './common/config/jwt.config.';
 
@@ -32,7 +32,7 @@ import jwtConfig from './common/config/jwt.config.';
 
     MicoRouterModule,
 
-    QuotoModule,
+    quoteModule,
   ],
   controllers: [],
   providers: [],
