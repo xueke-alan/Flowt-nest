@@ -65,6 +65,42 @@ export class quoteService {
           },
         ],
       },
+      {
+        lable: q + '+6',
+        suffix: [
+          {
+            type: 'strander',
+            text: '标准号',
+          },
+        ],
+      },
+      {
+        lable: q + '+7',
+        suffix: [
+          {
+            type: 'strander',
+            text: '标准号',
+          },
+        ],
+      },
+      {
+        lable: q + '+8',
+        suffix: [
+          {
+            type: 'strander',
+            text: '标准号',
+          },
+        ],
+      },
+      {
+        lable: q + '+9',
+        suffix: [
+          {
+            type: 'strander',
+            text: '标准号',
+          },
+        ],
+      },
     ];
     async function waitForOneSecond() {
       return new Promise<void>((resolve) => {
