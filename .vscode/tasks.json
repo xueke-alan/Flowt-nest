@@ -5,6 +5,7 @@
     {
       "label": "Start All",
       "dependsOn": ["NestJS", "BaseApp", "ChildApp"],
+      "detail": "开启全部应用 (基座应用，子应用，后端服务器)",
       "group": {
         "kind": "build",
         "isDefault": true
@@ -18,11 +19,10 @@
       "detail": "nest start --watch"
     },
     {
+      "label": "BaseApp",
       "type": "npm",
       "script": "dev",
       "problemMatcher": [],
-      "label": "BaseApp",
-      "detail": "vite --open",
       "options": {
         "cwd": "../Flowt_BaseApp"
       }
@@ -30,7 +30,7 @@
     {
       "label": "ChildApp",
       "type": "shell",
-      "command": "npm run dev",
+      "command": "npm run serve",
       "options": {
         "cwd": "../Flowt_ChildApp"
       }
@@ -47,7 +47,7 @@
     {
       "label": "pnpm NestApi",
       "type": "shell",
-      "command": "pnpm i",
+      "command": "pnpm i"
     },
     {
       "label": "pnpm ChildApp",
