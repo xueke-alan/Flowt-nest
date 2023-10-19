@@ -9,7 +9,7 @@ export class MicoRouterService {
   constructor(
     @InjectRepository(MicoRouter)
     private readonly MicoRouter: Repository<MicoRouter>,
-  ) {}
+  ) { }
 
   async findAll({ role }) {
     // 定义别名
